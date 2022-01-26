@@ -57,7 +57,7 @@ public class StudentService {
 		student.setLastName(lastName);
 		student.setMajor(major);
 		student.setPhone(phone);
-		em.persist(student);
+		em.persist(student);// add using persist
 		return student;
 	}
 	
