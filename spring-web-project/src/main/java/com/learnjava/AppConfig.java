@@ -59,7 +59,7 @@ public class AppConfig {
 		ctx.setResources(resources);
 		tomcat.start();
 		tomcat.getServer().await();
-		// test for commit
+		// test for commit2
 		
 
 	}
