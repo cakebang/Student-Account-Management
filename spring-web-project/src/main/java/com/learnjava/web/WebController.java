@@ -107,10 +107,10 @@ public class WebController {
 //	
 	@GetMapping("/profile")
 	public String profile(HttpSession session) {
-//		Student user = (User)session.getAttribute(KEY_USER);
-//		if (user == null) {
-//			return new ModelAndView("redirect:/signin");
-//		}
+		Student user = (Student)session.getAttribute(KEY_USER);
+		if (user == null) {
+			return "redirect:signin.html";
+		}
 //		HashMap<String, Object> map = new HashMap<>();
 //		map.put("user", user);
 		return "profile.html";

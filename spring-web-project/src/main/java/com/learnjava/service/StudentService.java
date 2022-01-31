@@ -60,10 +60,12 @@ public class StudentService {
 		em.persist(student);// add using persist
 		return student;
 	}
-	
+	/*TODO 
+	 * email can't be updated
+	 */
 	public void updateStudent(String email, String password, String firstName, String lastName,
 			String address, String phone, String major) {
-		Student student = getStudentByEmail(email);
+		Student student = getStudentByEmail(email);// email wont change. nee
 		student.setEmail(email);
 		student.setPassword(password);
 		student.setAddress(address);
