@@ -26,10 +26,10 @@ public class StudentServiceTest {
 	@Autowired
 	StudentService service;
 	
-	@Before
-	public void initi() {
-		
-	}
+//	@Before
+//	public void initi() {
+//		
+//	}
 
 	@Test
 	public void testRegister() {
