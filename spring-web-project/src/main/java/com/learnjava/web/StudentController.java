@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.learnjava.entity.Major;
 import com.learnjava.entity.Student;
+import com.learnjava.service.MajorService;
 import com.learnjava.service.StudentService;
 //
 //import com.learnjava.entity.Student;
@@ -36,6 +38,9 @@ public class StudentController {
 	 
 	 @Autowired
 	 StudentService studentService;
+	 
+	 @Autowired
+	 MajorService majorService;
 	 
 //	 @RequestMapping("/")
 //	 public String index(HttpSession session) {

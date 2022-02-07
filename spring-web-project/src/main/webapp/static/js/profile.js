@@ -15,9 +15,17 @@ $("document").ready(function(){
 			$("#email").append("email: " + obj.email);
 			$("#address").append("address: " + obj.address);
 			$("#phone").append("phone: " + obj.phone);
-			$("#major").append("major: " + obj.major);
-			
 		}
 		
+	});
+	$.ajax({
+		type: "GET",
+		contentType: "application/json; charset=utf-8",
+		url: "/api/major/profile",
+		dataType: "json",
+		success: function(data) {
+			var obj = JSON.parse(JSON.stringify(data));
+			$("#major").append("major: " + obj.name);
+		}
 	});
 });

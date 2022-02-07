@@ -34,8 +34,8 @@ public class Student {
 	@Column(name = "phone")
 	private String phone;
 	
-	@Column(name = "major")
-	private String major;
+	@Column(name = "major_id")
+	private int majorId;
 	
 	public int getId() {
 		return this.id;
@@ -93,19 +93,19 @@ public class Student {
 		this.phone = phone;
 	}
 	
-	public String getMajor() {
-		return this.major;
+	public int getMajorId() {
+		return this.majorId;
 	}
 	
-	public void setMajor(String major) {
-		this.major = major;
+	public void setMajorId(int majorId) {
+		this.majorId = majorId;
 	}
 	
 	@Override
 	public String toString() {
 		return String.format("Student [ID = %d, firstName = %s, lastName = %s, email = %s,"
-				+ "password = %s, address = %s, phone = %s, major = %s]", 
+				+ "password = %s, address = %s, phone = %s, major = %d]", 
 				this.id, this.firstName, this.lastName, this.email, 
-				this.password, this.address, this.phone, this.major);
+				this.password, this.address, this.phone, this.majorId);
 	}
 }

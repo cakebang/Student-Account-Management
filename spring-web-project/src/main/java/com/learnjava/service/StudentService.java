@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,9 @@ public class StudentService {
 	@PersistenceContext
 	EntityManager em;
 	
+	@Autowired
+	MajorService majorService;
+	
 	public Student getStudentById(int id) {
 		Student student = em.find(Student.class, id);
 		if (student == null) {
@@ -26,7 +30,7 @@ public class StudentService {
 	
 	public Student getStudentByEmail(String email) {
 		Query q = em.createQuery("SELECT s FROM Student s WHERE s.email = :email");//Student should be same with class name Student not student
-		q.setParameter("email", email);
+		q.setParameter("email", email.toLowerCase());
 		Student student = (Student)q.getSingleResult();
 		if (student == null) {
 			throw new RuntimeException("Student not found by " + email);
@@ -48,14 +52,15 @@ public class StudentService {
 	}
 	
 	public Student register(String email, String password, String firstName, String lastName,
-							String address, String phone, String major) {
+							String address, String phone, String majorName) {
 		Student student = new Student();
 		student.setEmail(email);
 		student.setPassword(password);
 		student.setAddress(address);
 		student.setFirstName(firstName);
 		student.setLastName(lastName);
-		student.setMajor(major);
+		int majorId = majorService.getMajorByName(majorName);
+		student.setMajorId(majorId);
 		student.setPhone(phone);
 		em.persist(student);// add using persist
 		return student;
@@ -64,14 +69,15 @@ public class StudentService {
 	 * email can't be updated
 	 */
 	public void updateStudent(String email, String password, String firstName, String lastName,
-			String address, String phone, String major) {
+			String address, String phone, String majorName) {
 		Student student = getStudentByEmail(email);// email wont change. nee
 		student.setEmail(email);
 		student.setPassword(password);
 		student.setAddress(address);
 		student.setFirstName(firstName);
 		student.setLastName(lastName);
-		student.setMajor(major);
+		int majorId = majorService.getMajorByName(majorName);
+		student.setMajorId(majorId);
 		student.setPhone(phone);
 		em.flush();//update using flush, persist is to create a new row
 	}
