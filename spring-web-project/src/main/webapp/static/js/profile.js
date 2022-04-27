@@ -15,6 +15,7 @@ $("document").ready(function(){
 			$("#email").append("email: " + obj.email);
 			$("#address").append("address: " + obj.address);
 			$("#phone").append("phone: " + obj.phone);
+			$("#password").append("phone: " + obj.password);
 		}
 		
 	});

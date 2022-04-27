@@ -59,8 +59,13 @@ public class StudentService {
 		student.setAddress(address);
 		student.setFirstName(firstName);
 		student.setLastName(lastName);
-		int majorId = majorService.getMajorByName(majorName);
-		student.setMajorId(majorId);
+		try {
+			int majorId = majorService.getMajorByName(majorName);
+			student.setMajorId(majorId);
+			
+		} catch (RuntimeException ex) {
+			throw new RuntimeException(ex.getMessage());
+		}
 		student.setPhone(phone);
 		em.persist(student);// add using persist
 		return student;
@@ -76,8 +81,12 @@ public class StudentService {
 		student.setAddress(address);
 		student.setFirstName(firstName);
 		student.setLastName(lastName);
-		int majorId = majorService.getMajorByName(majorName);
-		student.setMajorId(majorId);
+		try {
+			int majorId = majorService.getMajorByName(majorName);
+			student.setMajorId(majorId);
+		} catch (RuntimeException ex) {
+			throw new RuntimeException(ex.getMessage());
+		}
 		student.setPhone(phone);
 		em.flush();//update using flush, persist is to create a new row
 	}

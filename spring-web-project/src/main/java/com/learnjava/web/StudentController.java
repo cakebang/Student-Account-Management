@@ -2,12 +2,18 @@ package com.learnjava.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 //
 //import java.util.HashMap;
@@ -42,29 +48,30 @@ public class StudentController {
 	 @Autowired
 	 MajorService majorService;
 	 
-//	 @RequestMapping("/")
-//	 public String index(HttpSession session) {
-//		 Student student = (Student)session.getAttribute(KEY_USER);
-////		 Map<String, Object> map = new HashMap<String, Object>();
-////		 
-////		 if (student != null) {
-////			 map.put("user", student);
-////		 }
-//		 return "_base";
-//	 }
 	 
 	 @RequestMapping(value = "/signin", method = RequestMethod.POST,  produces = "application/json")//consumes = "application/json",
-	 public Student signin(@RequestBody SignInRequest signInRequest, HttpSession session ) {//@RequestBody SignInRequest signInRequest @RequestParam("email") String email, @RequestParam("password") String password
+	 public Student signin(@RequestBody SignInRequest signInRequest, HttpSession session) {//@RequestBody SignInRequest signInRequest @RequestParam("email") String email, @RequestParam("password") String password
 		 String email = signInRequest.email;
 		 String password = signInRequest.password;
 		 Student student = studentService.login(email, password);
-		 session.setAttribute(KEY_USER, student);
+
+//		 ResponseCookie cookie = ResponseCookie.from(KEY_USER, String.valueOf(id))
+//				 .httpOnly(true)
+//				 .path("/")
+//				 .maxAge(86400)
+//				 .build();
+//		 ResponseEntity
+//		 	.ok()
+//		 	.header(HttpHeaders.SET_COOKIE,cookie.toString())
+//		 	.build();
+		session.setAttribute(KEY_USER, student);
+		 
 		 return student;
 	 }
 	 
 	 @RequestMapping(value = "/profile", method = RequestMethod.GET, produces = "application/json")
 	 public Student profile(HttpSession session) {
-		 Student student = (Student)session.getAttribute(KEY_USER);
+		 Student student = (Student) session.getAttribute(KEY_USER);
 		 return student;
 	 }
 	 
@@ -79,7 +86,7 @@ public class StudentController {
 	 
 	 @RequestMapping(value = "/update", method = RequestMethod.GET, produces = "application/json")
 	 public Student update(HttpSession session) {
-		 Student student = (Student)session.getAttribute(KEY_USER);
+		 Student student = (Student) session.getAttribute(KEY_USER);
 		 return student;
 	 }
 	 
@@ -113,15 +120,6 @@ public class StudentController {
 		 }
 		 return map;
 	 }
-	 
-	
-	
-	 	
-//	 	@RequestMapping(value = "/json", method=RequestMethod.GET)
-//	 	public String test() {
-//	 		
-//	 		return "{\"id\":1,\"content\":\"Hello, World!\"}";
-//	 	}
 	 
 	 public static class SignInRequest {
 		 public String email;

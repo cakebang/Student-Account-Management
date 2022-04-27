@@ -36,7 +36,12 @@ $("document").ready(function() {
 				var obj = JSON.parse(JSON.stringify(response));
 				$("#result").append("success update profile of " + obj.success.firstName);
 				
+			},
+			error: function(response) {
+				//var obj = JSON.parse(JSON.stringify(response));
+				//alert(obj.error);
 			}
+			
 		
 		
 	});

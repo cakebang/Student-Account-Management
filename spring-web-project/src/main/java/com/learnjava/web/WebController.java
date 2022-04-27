@@ -8,7 +8,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,23 +42,25 @@ public class WebController {
 	
 	
 	@GetMapping("/")
-	public String index(HttpSession session) {
+	public String index() {
 //		Student user = (Student)session.getAttribute(KEY_USER);
 //		Map<String, Object> model = new HashMap<>();
 //		
 //		if (user != null) {
 //			model.put("student", user);
 //		}
+		
+		
 		return "index2.html";
 	}
 	
 	@GetMapping("/signin")
 	public String signin(HttpSession session) {
-		Student student = (Student)session.getAttribute(KEY_USER);
-		if (student != null) {
-			return "profile.html";
+ 		Student student = (Student)session.getAttribute(KEY_USER);
+		if (student == null) {
+			return "signin.html";
 		}
-		return "signin.html";
+		return "profile.html";
 	}
 	
 	
@@ -63,81 +69,34 @@ public class WebController {
 		return new ModelAndView("register.html");
 	}
 	
-//	@PostMapping("/register")
-//	public ModelAndView register(@RequestParam("email") String email, @RequestParam("password") String password,
-//			@RequestParam("name") String name) {
-//		try {
-//			User user = userService.register(email, password, name);
-//			logger.info("user registered: {}", user.getEmail());
-//
-//		} catch (RuntimeException ex) {
-//			HashMap<String, Object> map = new HashMap<>();
-//			map.put("email", email);
-//			map.put("error", "Register fail");
-//			return new ModelAndView("register.html", map);
-//		}
-//		//redirect to signin mapping
-//		return new ModelAndView("redirect:/signin");
-//	}
-//	
-//	@GetMapping("/signin")
-//	public ModelAndView signin(HttpSession session) {
-//		User user = (User)session.getAttribute(KEY_USER);
-//		if (user != null) {
-//			return new ModelAndView("redirect:/profile");
-//		}
-//		return new ModelAndView("signin.html");
-//		
-//	}
-//	
-//	@PostMapping("/signin")
-//	public String doSignin(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session) {
-//		try {
-//			User user = userService.signin(email, password);
-//			session.setAttribute(KEY_USER, user);
-//		} catch (RuntimeException ex) {
-//			HashMap<String, Object> map = new HashMap<>();
-//			map.put("email", email);
-//			map.put("error", "Login fail");
-//			return new ModelAndView("signin.html", map);
-//		}
-//		return new ModelAndView("redirect:/profile");
-//		
-//	}
-//	
+
 	@GetMapping("/profile")
 	public String profile(HttpSession session) {
-		Student user = (Student)session.getAttribute(KEY_USER);
-		if (user == null) {
+ 		Student student = (Student)session.getAttribute(KEY_USER);
+		if (student == null) {
 			return "redirect:signin.html";
 		}
-//		HashMap<String, Object> map = new HashMap<>();
-//		map.put("user", user);
+		
 		return "profile.html";
 		
 	}
 	
 	@GetMapping("/update")
-	public String update(HttpSession session) {
+	public String update() {
 		return "update.html";
 	}
 	
 	@GetMapping("/delete")
-	public String delete(HttpSession session) {
+	public String delete() {
 		return "delete.html";
 	}
 	
 	@GetMapping("/signout")
-	public String signout(HttpSession session) {
+	public String signout( HttpSession session) {
 		session.removeAttribute(KEY_USER);
 		return "redirect:signin.html";
 	}
-//	
-//	@GetMapping("/signout")
-//	public ModelAndView signout(HttpSession session) {
-//		session.removeAttribute(KEY_USER);
-//		return new ModelAndView("redirect:/signin");
-//	}
+
 	
 	
 
